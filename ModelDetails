@@ -32,14 +32,14 @@ F0 == Muscle Force Matrix
 J_inv_t == Inverse Jacobian for the given posture
 hand == location of hand
 elbow == location of elbow
-Optimization – Maximum Force Normal to wall (negative x direction)***NEED TO CHANGE THIS TO VERT
+Optimization – Maximum Force Normal to wall (positive z direction)
 	c1 = J^-1 * R * F0
-	Cost = cx1 + 0.01*ones(1,18 Muscles) [maximize force in negative x, minimize activations)
+	Cost = -1*cz1 + 0.01*ones(1,18 Muscles) [maximize force in positive z, minimize activations)
 	Epsilon = 0.1
-	A = [ I(18,18); -I(18,18); cy1; -cy1; cz1; -cz1 ]
+	A = [ I(18,18); -I(18,18); cy1; -cy1; cx1; -cx1 ]
 	b = [ ones(1,18), zeros(1,18), epsilon, -epsilon, epsilon, -epsilon ];
-	X = linprog(cost, A, b)
-	MaxForce = [ cx1*X; cy1*X; cz1*X ];
+	Z = linprog(cost, A, b)
+	MaxForce = [ cx1*Z; cy1*Z; cz1*Z ];
 	
 Plot
 Visualize Arm Posture
