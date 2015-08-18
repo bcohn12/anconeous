@@ -165,20 +165,20 @@ for sub=1:numIt % run for each unique subject (i.e. the Monte Carlo analysis)
         cz1 = c1(3, :);
         
         % OPTIMIZATION: Find maximum x force in negative direction
-        f = cx1+0.01*ones(1,numMuscles); % cost function based on force and activation
+        f = -1*cz1+0.01*ones(1,numMuscles); % cost function based on force and activation
         epsilon = 0.1; % tolerance
         % Set up constraint matrices
-        A = [eye(numMuscles); -eye(numMuscles); cy1; -cy1; cz1; -cz1]; % Constraints on activation, force in y, z
-        b = [ones(1,numMuscles), zeros(1,numMuscles), epsilon, -epsilon, epsilon, -epsilon]; % activation between 0 and 1, force in y and z zero +- epsilon.
+        A = [eye(numMuscles); -eye(numMuscles); cy1; -cy1; cx1; -cx1]; % Constraints on activation, force in y, x
+        b = [ones(1,numMuscles), zeros(1,numMuscles), epsilon, -epsilon, epsilon, -epsilon]; % activation between 0 and 1, force in y and x zero +- epsilon.
         % Linear programming
-        X = linprog(f, A, b);
-        if length(X) ~= numMuscles % i.e. failed to compute a solution
-            X=zeros(numMuscles,1);
+        Z = linprog(f, A, b);
+        if length(Z) ~= numMuscles % i.e. failed to compute a solution
+            Z=zeros(numMuscles,1);
         end
-        Fx1(posnum) = cx1*X;
-        Fy1 = cy1*X;
-        Fz1 = cz1*X;
-        MaxForce = [Fx1(posnum) Fy1 Fz1];
+        Fx1 = cx1*Z;
+        Fy1 = cy1*Z;
+        Fz1(posnum) = cz1*Z;
+        MaxForce = [Fx1 Fy1 Fz1(posnum)];
         
         % Plot of Arm Posture
         if sub==1
