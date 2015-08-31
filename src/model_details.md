@@ -13,10 +13,13 @@ Length-Tension Relationship Parameter = 0.5
 #Moment Arms from a range reported in literature
 PCSA
 (cm^2)	`8.2	8.2	1.9	3.5	8.6	9.8	2.5	3.0	9.1	7.6	1.7	5.7	9.0	2.5	4.5	3.1	7.1	1.9`
+
 Penn.
 (°)	`22	15	18	7	19	20	24	16	22.3	21.7	27	12	9	0	0	0	0	0`
+
 Mopt
 (mm)`	98	108	137	68	76	87	74	162	140	255	93	134	114	27	116	132	86	173`
+
 
 #Monte Carlo
 PCSA varied 0.5 to 1.5 times literature value
